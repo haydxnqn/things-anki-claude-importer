@@ -1,5 +1,18 @@
 # Things → Anki (Claude) vocab importer
 
+A small TypeScript automation for learning English vocabulary. You save a word in Things 3, and an LLM writes a flashcard for it in Anki.
+
+<!-- demo GIF here: Things todo tagged Anki → card appears in Anki -->
+
+## How it works
+
+- **Things 3**: `osascript` (AppleScript) lists Inbox todos with the watched tag and marks them complete afterwards.
+- **LLM**: Anthropic SDK (default) or OpenRouter through the OpenAI SDK. A `zod` schema validates the card's definition and example.
+- **Anki**: AnkiConnect at `http://127.0.0.1:8765`. If a note with the same front already exists, the LLM call is skipped.
+- **Scheduling**: a macOS LaunchAgent generated from `launchagent/com.things-anki-claude.plist.template`.
+
+Stack: TypeScript, Node.js, tsx, zod, @anthropic-ai/sdk, openai.
+
 Add a new Things 3 Inbox todo tagged `Anki`, and this script will:
 
 1. Ask Claude for a concise definition + example (optionally using your Things notes as context)
